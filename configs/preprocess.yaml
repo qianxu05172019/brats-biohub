@@ -1,0 +1,28 @@
+# Preprocessing pipeline configuration
+
+data:
+  root_dir: /workspace/DataChallenge/data/BraTS2021_Training_Data
+  modalities: [flair, t1, t1ce, t2]
+  label_key: seg
+
+preprocessing:
+  orientation: RAS
+  spacing: [1.0, 1.0, 1.0]
+  intensity:
+    normalize: true
+    method: z_score          # z_score | min_max
+    nonzero_only: true
+    clip_percentiles: [0.5, 99.5]
+  crop:
+    foreground_crop: true
+    margin: 10
+
+label_mapping:
+  # BraTS 2021 original labels -> training labels
+  # 0: background, 1: NCR/NET, 2: ED, 4: ET
+  original: [0, 1, 2, 4]
+  mapped: [0, 1, 2, 3]
+
+output:
+  cache_dir: /workspace/brats-biohub/cache/preprocessed
+  save_format: nii.gz

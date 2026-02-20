@@ -1,0 +1,38 @@
+# Data & model checkpoints (too large for git)
+checkpoints/
+outputs/predictions/
+outputs/bias_field/
+outputs/denoised/
+outputs/registration/
+logs/
+
+# Wandb
+wandb/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+*.env
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

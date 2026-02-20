@@ -1,0 +1,56 @@
+# Training configuration for 3D U-Net on BraTS 2021
+
+data:
+  root_dir: /workspace/DataChallenge/data/BraTS2021_Training_Data
+  modalities: [flair, t1, t1ce, t2]
+  label_key: seg
+  train_ratio: 0.8
+  val_ratio: 0.2
+  num_workers: 4
+  cache_rate: 0.3
+
+model:
+  name: UNet
+  spatial_dims: 3
+  in_channels: 4
+  out_channels: 4          # background, NCR/NET, ED, ET
+  channels: [32, 64, 128, 256, 512]
+  strides: [2, 2, 2, 2]
+  num_res_units: 2
+  norm: instance
+
+training:
+  max_epochs: 300
+  batch_size: 2
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  optimizer: AdamW
+  scheduler: CosineAnnealingLR
+  scheduler_params:
+    T_max: 300
+    eta_min: 1.0e-7
+
+loss:
+  name: DiceCELoss
+  include_background: false
+  to_onehot_y: true
+  softmax: true
+
+transforms:
+  roi_size: [128, 128, 128]
+  rand_flip_prob: 0.5
+  rand_rotate_range: 0.2618  # 15 degrees
+  rand_scale_range: [0.9, 1.1]
+  rand_intensity_shift: 0.1
+  rand_intensity_scale: 0.1
+
+checkpointing:
+  save_dir: /workspace/brats-biohub/checkpoints
+  save_interval: 10
+  save_best: true
+  monitor: val_mean_dice
+
+logging:
+  use_wandb: true
+  project: brats-biohub
+  log_interval: 10

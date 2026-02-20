@@ -1,0 +1,32 @@
+# Inference configuration with sliding window
+
+data:
+  root_dir: /workspace/DataChallenge/data/BraTS2021_Training_Data
+  modalities: [flair, t1, t1ce, t2]
+  val_ratio: 0.2
+  seed: 42
+
+model:
+  name: UNet
+  spatial_dims: 3
+  in_channels: 4
+  out_channels: 4
+  channels: [32, 64, 128, 256, 512]
+  strides: [2, 2, 2, 2]
+  num_res_units: 2
+  norm: instance
+  checkpoint: /workspace/brats-biohub/checkpoints/best_model.pth
+
+inference:
+  sliding_window:
+    roi_size: [128, 128, 128]
+    sw_batch_size: 4
+    overlap: 0.5
+    mode: gaussian
+  post_processing:
+    argmax: true
+    keep_largest_component: true
+
+output:
+  save_dir: /workspace/brats-biohub/outputs/predictions
+  save_nifti: true

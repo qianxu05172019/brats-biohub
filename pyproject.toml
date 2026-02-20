@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brats-biohub"
+version = "0.1.0"
+description = "BraTS 2021 Brain Tumor Segmentation Pipeline"
+requires-python = ">=3.10"
+dependencies = [
+    "monai",
+    "nibabel",
+    "SimpleITK",
+    "scikit-learn",
+    "scikit-survival",
+    "shap",
+    "xgboost",
+    "seaborn",
+    "plotly",
+    "scipy",
+    "tqdm",
+    "wandb",
+    "pandas",
+    "numpy",
+    "pyyaml",
+]
